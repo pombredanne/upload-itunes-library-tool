@@ -72,9 +72,10 @@ def parse(library):
     }
 
     meta = [OrderedDict([
-        ('itunes_version', library['Application Version']),
-        ('export_date', library['Date'].isoformat()),
         ('id', library['Library Persistent ID']),
+        ('itunes_version', library['Application Version']),
+        ('date_created', library['Date'].isoformat()),
+        ('date_uploaded', datetime.datetime.today().isoformat()),
         ('location', library['Music Folder'])
     ])]
     
@@ -155,6 +156,12 @@ def save(data):
     dt = dumptruck.DumpTruck(dbname="scraperwiki.sqlite")
     for table_name, rows in data.iteritems():
         dt.insert(rows, table_name)
+    dt.create_index(['type'], 'tracks')
+    dt.create_index(['date_added'], 'tracks')
+    dt.create_index(['date_modified'], 'tracks')
+    dt.create_index(['date_last_played'], 'tracks')
+    dt.create_index(['play_count'], 'tracks')
+    dt.create_index(['rating'], 'tracks')
 
 
 def get(dictionary, key, otherwise=None):
