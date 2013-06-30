@@ -1,0 +1,6 @@
+{
+  "displayName": "Upload iTunes library",
+  "description": "Explore and visualise your tracks and playlists",
+  "icon": "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-itunes.png",
+  "color": "#2753C2"
+}
