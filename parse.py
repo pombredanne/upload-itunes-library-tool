@@ -3,10 +3,11 @@
 import sys
 import xml
 import json
-import dumptruck
 import datetime
 import plistlib
+import dumptruck
 import traceback
+import scraperwiki
 from collections import OrderedDict
 
 
@@ -26,6 +27,7 @@ def main():
             save(parse(extract(sys.argv[1])))
 
     except Exception, e:
+        scraperwiki.status('error', type(e).__name__)
         print json.dumps({
             'error': {
                 'type': type(e).__name__,
@@ -35,6 +37,7 @@ def main():
         })
 
     else:
+        scraperwiki.status('ok')
         print json.dumps({
             'success': {
                 'type': 'ok',
