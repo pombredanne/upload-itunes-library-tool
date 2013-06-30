@@ -1,0 +1,32 @@
+body {
+  text-align: center;
+}
+
+form#up {
+  padding: 40px 0;
+  margin: 0;
+}
+
+p.loading {
+  margin-top: 100px;
+}
+
+div.error {
+  display: none;
+  width: 50%;
+  margin: 40px auto;
+  padding: 20px;
+  border: 2px solid #fa9;
+  background: #ffefea;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+div.error h1 {
+  font-size: 32px;
+  line-height: 36px;
+}
+
+a#tryAgain {
+  display: none;
+}
