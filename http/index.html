@@ -32,7 +32,7 @@
     $('#apikey').val(settings.source.apikey)
 
     $('input:submit').hide()
-    $('<a id="fake">').html('Select a file&hellip;').on('click', function(){
+    $('<a id="fake">').html('Select an iTunes library file&hellip;').on('click', function(){
       $('#file').trigger('click')
     }).addClass('btn btn-primary btn-large').appendTo('#up')
     $('#file').hide().on('change', startFileUpload)
