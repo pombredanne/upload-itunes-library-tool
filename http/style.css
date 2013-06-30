@@ -7,6 +7,18 @@ form#up {
   margin: 0;
 }
 
+form#up .lead {
+  margin-bottom: 40px;
+}
+
+p.warning {
+  margin-top: 10px;
+}
+
+p.help {
+  margin-top: 30px;
+}
+
 p.loading {
   margin-top: 80px;
   padding-top: 50px;

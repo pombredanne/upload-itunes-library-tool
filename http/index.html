@@ -19,6 +19,25 @@
     </form>
     <script>
 
+    function prettyDate(time){
+      var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+        diff = (((new Date()).getTime() - date.getTime()) / 1000),
+        day_diff = Math.floor(diff / 86400);
+
+      if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
+        return;
+
+      return day_diff == 0 && (
+          diff < 60 && "just now" ||
+          diff < 120 && "1 minute ago" ||
+          diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+          diff < 7200 && "1 hour ago" ||
+          diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+        day_diff == 1 && "Yesterday" ||
+        day_diff < 7 && day_diff + " days ago" ||
+        day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
+    }
+
     startFileUpload = function(e){
       path = $(this)[0].files[0].name
       if(path !== ''){
@@ -27,15 +46,26 @@
       }
     }
 
+    scraperwiki.sql('SELECT "date_uploaded" FROM "library"', function(data){
+      $('<a id="fake">').html('Upload a new library file*')
+        .addClass('btn btn-danger btn-large').appendTo('#up')
+        .after('<p class="warning">* this will clear all of your data</p>')
+        .before('<p class="lead">Library uploaded ' + prettyDate(data[0]['date_uploaded']) + '</p>')
+    }, function(jqXHR, errorThrown, textStatus){
+      $('<a id="fake">').html('Select an iTunes library file&hellip;')
+        .addClass('btn btn-primary btn-large').appendTo('#up')
+        .after('<p class="help">To generate a <strong>library.xml</strong> file, open iTunes and<br>select <strong>File</strong> &gt; <strong>Library</strong> &gt; <strong>Export Library&hellip;</strong></p>')
+    })
+
     settings = scraperwiki.readSettings()
     $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
     $('#apikey').val(settings.source.apikey)
 
     $('input:submit').hide()
-    $('<a id="fake">').html('Select an iTunes library file&hellip;').on('click', function(){
-      $('#file').trigger('click')
-    }).addClass('btn btn-primary btn-large').appendTo('#up')
     $('#file').hide().on('change', startFileUpload)
+    $(document).on('click', '#fake', function(){
+      $('#file').trigger('click')
+    })
 
     </script>
   </body>
