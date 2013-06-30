@@ -10,6 +10,32 @@
     <script src="//beta.scraperwiki.com/js/scraperwiki.js"></script>
   </head>
   <body>
-    <h2>Under construction</h2>
+    <form id="up" action="../../file/" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" size="80" id="file">
+      <input type="hidden" name="apikey" id="apikey">
+      <input type="hidden" name="next" id="next">
+      <input type="submit" value="Upload now!">
+    </form>
+    <script>
+
+    startFileUpload = function(e){
+      path = $(this)[0].files[0].name
+      if(path !== ''){
+        $('#fake').addClass('loading disabled').html("Uploading " + path + "&hellip;")
+        $('input:submit').trigger('click')
+      }
+    }
+
+    settings = scraperwiki.readSettings()
+    $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
+    $('#apikey').val(settings.source.apikey)
+
+    $('input:submit').hide()
+    $('<a id="fake">').html('Select a file&hellip;').on('click', function(){
+      $('#file').trigger('click')
+    }).addClass('btn btn-primary btn-large').appendTo('#up')
+    $('#file').hide().on('change', startFileUpload)
+
+    </script>
   </body>
 </html>
